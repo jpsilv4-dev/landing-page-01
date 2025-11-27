@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burgers & Co - Sua Lanchonete Favorita</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    nav a:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23ff6b6b" width="1200" height="600"/></svg>');
+      background-size: cover;
+      background-position: center;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      animation: slideIn 0.8s ease-out 0.2s both;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: #ff6b6b;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      background: #ee5a6f;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #ff6b6b;
+      margin-left: 1rem;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .menu {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .menu h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #ff6b6b;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .menu-item {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-item-img {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .menu-item-content {
+      padding: 1.5rem;
+    }
+
+    .menu-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .menu-item p {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+
+    .about {
+      background: #f9f9f9;
+      padding: 5rem 2rem;
+      margin: 5rem 0;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #ff6b6b;
+    }
+
+    .about p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .contact {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-info {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-item p {
+      opacity: 0.9;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s;
+      z-index: 999;
+      text-decoration: none;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20ba5a;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+      }
+
+      .btn-secondary {
+        display: block;
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="assets/logo.jpg" alt="Burgers & Co">
+        <span class="logo-text">Burgers & Co</span>
+      </div>
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#contact">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bem-vindo ao Burgers & Co</h1>
+      <p>Os melhores lanches da cidade, feitos com amor</p>
+      <a href="#menu" class="btn">Veja o Menu</a>
+      <a href="https://wa.me/43988238449?text=Olá! Gostaria de fazer um pedido na Burgers & Co😁" target="_blank"
+        class="btn btn-secondary">Faça um Pedido</a>
+    </div>
+  </section>
+
+  <section id="menu" class="menu">
+    <h2>Nosso Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/hamburger.jpg');"></div>
+        <div class="menu-item-content">
+          <h3>Burger Clássico</h3>
+          <p>Hambúrguer artesanal com queijo derretido e alface fresca</p>
+          <div class="price">R$ 24,90</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/batata frita.jpg');"></div>
+        <div class="menu-item-content">
+          <h3>Batata Frita Premium</h3>
+          <p>Batata fresca cortada no momento, dourada e crocante</p>
+          <div class="price">R$ 12,90</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/refrigerante.jpg');">
+        </div>
+        <div class="menu-item-content">
+          <h3>Refrigerante Gelado</h3>
+          <p>Refrigerante gelado em várias opções e sabores</p>
+          <div class="price">R$ 4,90</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/hot\ dog.png');">
+        </div>
+        <div class="menu-item-content">
+          <h3>Hot Dog Especial</h3>
+          <p>Hot dog gourmet com toppings selecionados</p>
+          <div class="price">R$ 18,90</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/pizza.jpg');">
+        </div>
+        <div class="menu-item-content">
+          <h3>Pizza Slices</h3>
+          <p>Fatias de pizza fresca saída do forno</p>
+          <div class="price">R$ 8,90</div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-img" style="background-image: url('assets/bolo.jpg');"></div>
+        <div class="menu-item-content">
+          <h3>Sobremesa Doce</h3>
+          <p>Deliciosa sobremesa para terminar sua refeição</p>
+          <div class="price">R$ 9,90</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="about-content">
+      <h2>Sobre Nós</h2>
+      <p>Há 10 anos servindo os melhores lanches da região. Utilizamos apenas ingredientes frescos e de qualidade,
+        preparados por nossos chefs experientes. Nossa missão é proporcionar uma experiência gastronômica única e
+        memorável a cada cliente. Visite-nos e descubra por que somos a lanchonete favorita de Apucarana!</p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Entre em Contato</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <h3>📍 Localização</h3>
+        <p>Rua Fictícia, 123<br>Apucarana - PR</p>
+      </div>
+      <div class="contact-item">
+        <h3>📞 Telefone</h3>
+        <p>(43) 98823-8449<br>(43) 98823-8449</p>
+      </div>
+      <div class="contact-item">
+        <h3>⏰ Horário</h3>
+        <p>Seg-Sex: 11h - 22h<br>Sab-Dom: 12h - 23h</p>
+      </div>
+    </div>
+    <a href="https://wa.me/5511987654321?text=Olá! Gostaria de fazer um pedido na Burgers & Co" target="_blank"
+      class="btn">Faça um Pedido Agora</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Burgers & Co. Todos os direitos reservados.</p>
+  </footer>
+
+  <a href="https://wa.me/43988238449?text=Olá! Gostaria de fazer um pedido na Burgers & Co😁" class="whatsapp-btn"
+    target="_blank" title="Envie uma mensagem via WhatsApp">
+    💬
+  </a>
+
+  <script>
+    // Adicionar animação ao scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'slideIn 0.8s ease-out';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+      observer.observe(item);
+    });
+  </script>
+</body>
+
+</html>
